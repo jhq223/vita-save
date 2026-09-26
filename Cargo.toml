@@ -1,0 +1,61 @@
+[package]
+name = "vita-save"
+version = "0.1.0"
+edition = "2024"
+authors = ["jhq223"]
+description = "PS Vita save manager with Nivora and WebDAV"
+repository = "https://github.com/jhq223/vita-save"
+license = "GPL-3.0-or-later"
+publish = false
+
+[dependencies]
+anyhow = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+postcard = { version = "1.1", default-features = false, features = ["alloc", "use-std"] }
+sha2 = "0.10"
+getrandom = "0.2"
+toml = "0.8"
+ureq = { version = "=3.4.2", default-features = false, features = ["rustls", "rustls-webpki-roots"] }
+url = "2.5"
+base64 = "0.22"
+quick-xml = "0.38"
+rusqlite = { version = "0.38", features = ["bundled", "serialize"] }
+nivora-platform = { git = "https://github.com/jhq223/Nivora.git", rev = "2a31f23204eabc30a002c547ae30cc8cac532cd5", default-features = false }
+nivora-ui = { git = "https://github.com/jhq223/Nivora.git", rev = "2a31f23204eabc30a002c547ae30cc8cac532cd5", default-features = false, features = ["i18n", "ime"] }
+
+[target.'cfg(target_os = "vita")'.dependencies]
+nivora-render-gles2 = { git = "https://github.com/jhq223/Nivora.git", rev = "2a31f23204eabc30a002c547ae30cc8cac532cd5", default-features = false, features = ["ab-glyph"] }
+glow = "0.18"
+image = { version = "0.25.10", default-features = false, features = ["png"] }
+pvr-psp2-sys = { git = "https://github.com/jhq223/pvr-psp2-sys.git", rev = "2b0a956ff7caab493ba5a3ec17be221d97cdede1" }
+vitasdk-sys = { version = "0.3.3", features = ["SceAppMgr_stub", "SceCtrl_stub", "SceTouch_stub", "SceKernelModulemgr_stub", "SceLibKernel_stub", "SceSysmodule_stub", "SceRegistryMgr_stub", "ScePower_stub", "SceProcessmgr_stub", "SceIofilemgr_stub", "SceIme_stub", "SceRtc_stub"] }
+
+[build-dependencies]
+serde_json = "1.0"
+
+[dev-dependencies]
+tempfile = "3"
+
+[patch.crates-io]
+ring = { git = "https://github.com/vita-rust/ring", rev = "502a916e86dce91ffa9ad96ef62a6e9fc6f96755" }
+
+[lints.rust]
+unsafe_op_in_unsafe_fn = "deny"
+
+[profile.release]
+lto = true
+codegen-units = 1
+opt-level = 3
+
+[package.metadata.vita]
+title_id = "VSAVE0001"
+title_name = "Vita Save"
+assets = "runtime"
+build_std = "std,panic_unwind"
+vita_make_fself_flags = []
+vita_mksfoex_flags = ["-d", "ATTRIBUTE2=12"]
+
+# vita-elf-create resolves SceLibc heap and main-thread settings by symbol name.
+# Stripping before that conversion silently discards these process parameters.
+[package.metadata.vita.profile.release]
+strip_symbols = false

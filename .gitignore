@@ -1,0 +1,9 @@
+/target/
+*.log
+*.vpk
+.env
+.env.*
+
+/native/target/
+/runtime/module/vita-save-kernel.skprx
+/runtime/module/vita-save-user.suprx
