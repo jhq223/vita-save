@@ -12,8 +12,6 @@ A PS Vita save manager with local backups and WebDAV cloud storage. Written in R
 
 ## Screenshots
 
-Desktop-rendered previews of the application UI at 960 × 544, using sample data.
-
 | Game details | Local backups |
 | --- | --- |
 | ![Game details](docs/screenshots/game-en.png) | ![Local backups](docs/screenshots/backups-en.png) |
@@ -25,8 +23,6 @@ Desktop-rendered previews of the application UI at 960 × 544, using sample data
 1. Download `vita-save.vpk` from [Releases](https://github.com/jhq223/vita-save/releases/latest).
 2. Transfer it to a PS Vita with homebrew support and install it with VitaShell.
 3. Close the game before backing up or restoring its save.
-
-The VPK includes the save-mounting modules and graphics runtime. No separate ioPlus installation is needed.
 
 ## Use
 
@@ -51,17 +47,15 @@ If a restore is interrupted, open **Local backups**. **Recover previous save** r
 
 Open **Settings → Cloud**, enter the URL, username and password, then select **Test connection**. The URL must point to an existing WebDAV directory. The test checks directory access, file upload, download and cleanup in a dialog.
 
-Uploads use an existing local backup. Downloads add a local backup; restore it separately to change the game save. There is no automatic synchronization.
-
 Remote files are stored below the configured directory:
 
 ```text
 vita-save/<Title ID>/<Save ID>/<backup ID>.vsave
 ```
 
-The server must support Basic authentication and PROPFIND, MKCOL, PUT, GET and DELETE. Uploads do not require MOVE. HTTPS certificates are verified using bundled CA roots; iTLS-Enso is not required. Some servers keep partial files after an interrupted upload; incomplete downloads are rejected.
+The server must support Basic authentication and PROPFIND, MKCOL, PUT, GET and DELETE. HTTPS certificates are verified using bundled CA roots; iTLS-Enso is not required. Some servers keep partial files after an interrupted upload; incomplete downloads are rejected.
 
-Credentials are stored as plain text in `ux0:data/vita-save/config.toml`. They are not included in save backups.
+Credentials are stored as plain text in `ux0:data/vita-save/config.toml`.
 
 ## Local data
 
@@ -79,7 +73,7 @@ ux0:data/vita-save/
 
 Each snapshot contains metadata and a complete, uncompressed copy of the save files. Copy the entire backup directory, including `manifest.bin` and `files/`, to keep it on a computer. `staging/` and `trash/` hold temporary files; `recovery/` records unfinished restores. Backup dates use the Vita's local time.
 
-The app scans `ux0:user/00/savedata` and `grw0:savedata`. Legacy vita-savemgr backup import and conversion between game regions are not supported.
+The app scans `ux0:user/00/savedata` and `grw0:savedata`.
 
 ## Build
 
@@ -101,7 +95,7 @@ cargo test --locked
 cargo clippy --all-targets --locked -- -D warnings
 ```
 
-Host tests use plaintext save fixtures. They do not replace device testing of mounting, interrupted writes or game loading. See [implementation notes](docs/design.md) and [graphics runtime provenance](docs/pvr-runtime.md) for development details.
+See [implementation notes](docs/design.md) and [graphics runtime provenance](docs/pvr-runtime.md) for development details.
 
 ## Credits and license
 

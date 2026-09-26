@@ -12,8 +12,6 @@ PS Vita 存档管理器，支持本地备份与 WebDAV 云端存储。使用 Rus
 
 ## 示例截图
 
-使用示例数据在桌面端渲染的应用界面，分辨率为 960 × 544，非实机截图。
-
 | 游戏详情 | 本地备份 |
 | --- | --- |
 | ![游戏详情](docs/screenshots/game-zh.png) | ![本地备份](docs/screenshots/backups-zh.png) |
@@ -25,8 +23,6 @@ PS Vita 存档管理器，支持本地备份与 WebDAV 云端存储。使用 Rus
 1. 从 [Releases](https://github.com/jhq223/vita-save/releases/latest) 下载 `vita-save.vpk`。
 2. 传输到支持自制软件的 PS Vita，使用 VitaShell 安装。
 3. 备份或恢复存档前，先关闭游戏。
-
-VPK 已包含存档挂载模块和图形运行库，无需另行安装 ioPlus。
 
 ## 使用
 
@@ -51,17 +47,15 @@ VPK 已包含存档挂载模块和图形运行库，无需另行安装 ioPlus。
 
 进入「设置 → 云端备份」，填写地址、用户名和密码，然后选择「测试连接」。地址须指向已经存在的 WebDAV 目录。测试会在弹窗中检查目录访问、文件上传、下载和清理。
 
-上传使用已有的本地备份。下载只会添加本地备份，需要另行选择恢复才会修改游戏存档。目前没有自动同步。
-
 文件保存在所配置目录的以下位置：
 
 ```text
 vita-save/<Title ID>/<Save ID>/<备份 ID>.vsave
 ```
 
-服务器须支持 Basic 认证以及 PROPFIND、MKCOL、PUT、GET、DELETE，上传不依赖 MOVE。HTTPS 使用内置 CA 校验证书，无需 iTLS-Enso。部分服务器会在上传中断后保留不完整文件；应用会拒绝导入不完整的下载。
+服务器须支持 Basic 认证以及 PROPFIND、MKCOL、PUT、GET、DELETE。HTTPS 使用内置 CA 校验证书，无需 iTLS-Enso。部分服务器会在上传中断后保留不完整文件；应用会拒绝导入不完整的下载。
 
-凭据以明文保存在 `ux0:data/vita-save/config.toml`，不会包含在存档备份中。
+凭据以明文保存在 `ux0:data/vita-save/config.toml`。
 
 ## 本地数据
 
@@ -79,7 +73,7 @@ ux0:data/vita-save/
 
 每份备份包含元数据和完整、未压缩的存档文件。复制到电脑留存时，请一起复制整个备份目录中的 `manifest.bin` 与 `files/`。`staging/` 和 `trash/` 用于临时文件，`recovery/` 记录未完成的恢复。备份日期按 Vita 本地时间显示。
 
-应用扫描 `ux0:user/00/savedata` 与 `grw0:savedata`。目前不支持导入旧版 vita-savemgr 备份或转换不同地区版本的游戏存档。
+应用扫描 `ux0:user/00/savedata` 与 `grw0:savedata`。
 
 ## 构建
 
@@ -101,7 +95,7 @@ cargo test --locked
 cargo clippy --all-targets --locked -- -D warnings
 ```
 
-主机测试使用明文存档样例，不能代替实机的挂载、中断写入和游戏读档验证。开发细节见[实现说明](docs/design.md)与[图形运行库来源](docs/pvr-runtime.md)。
+开发细节见[实现说明](docs/design.md)与[图形运行库来源](docs/pvr-runtime.md)。
 
 ## 致谢与许可
 
