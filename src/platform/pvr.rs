@@ -20,7 +20,6 @@ impl PvrContext {
         if unsafe { PVRSRVInitializeAppHint(&mut hint) } == 0 {
             return Err("PVR app-hint initialization failed".to_owned());
         }
-        hint.sw_tex_op_cleanup_delay = 16_000;
         hint.enable_memory_speed_test = 0;
         if unsafe { PVRSRVCreateVirtualAppHint(&mut hint) } == 0 {
             return Err("PVR virtual app-hint creation failed".to_owned());

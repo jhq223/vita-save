@@ -926,7 +926,7 @@ dependencies = [
 [[package]]
 name = "pvr-psp2-sys"
 version = "0.1.0"
-source = "git+https://github.com/jhq223/pvr-psp2-sys.git?rev=2b0a956ff7caab493ba5a3ec17be221d97cdede1#2b0a956ff7caab493ba5a3ec17be221d97cdede1"
+source = "git+https://github.com/jhq223/pvr-psp2-sys.git?rev=cc7aee48713eefd2fb83bb30366c2cbc1d290c68#cc7aee48713eefd2fb83bb30366c2cbc1d290c68"
 
 [[package]]
 name = "pxfm"
@@ -1538,7 +1538,7 @@ checksum = "0b928f33d975fc6ad9f86c8f283853ad26bdd5b10b7f1542aa2fa15e2289105a"
 
 [[package]]
 name = "vita-save"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "anyhow",
  "base64 0.22.1",

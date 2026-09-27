@@ -1,6 +1,6 @@
 [package]
 name = "vita-save"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2024"
 authors = ["jhq223"]
 description = "PS Vita save manager with Nivora and WebDAV"
@@ -27,7 +27,7 @@ nivora-ui = { git = "https://github.com/jhq223/Nivora.git", rev = "2a31f23204eab
 nivora-render-gles2 = { git = "https://github.com/jhq223/Nivora.git", rev = "2a31f23204eabc30a002c547ae30cc8cac532cd5", default-features = false, features = ["ab-glyph"] }
 glow = "0.18"
 image = { version = "0.25.10", default-features = false, features = ["png"] }
-pvr-psp2-sys = { git = "https://github.com/jhq223/pvr-psp2-sys.git", rev = "2b0a956ff7caab493ba5a3ec17be221d97cdede1" }
+pvr-psp2-sys = { git = "https://github.com/jhq223/pvr-psp2-sys.git", rev = "cc7aee48713eefd2fb83bb30366c2cbc1d290c68" }
 vitasdk-sys = { version = "0.3.3", features = ["SceAppMgr_stub", "SceCtrl_stub", "SceTouch_stub", "SceKernelModulemgr_stub", "SceLibKernel_stub", "SceSysmodule_stub", "SceRegistryMgr_stub", "ScePower_stub", "SceProcessmgr_stub", "SceIofilemgr_stub", "SceIme_stub", "SceRtc_stub"] }
 
 [build-dependencies]
@@ -53,7 +53,8 @@ title_name = "Vita Save"
 assets = "runtime"
 build_std = "std,panic_unwind"
 vita_make_fself_flags = []
-vita_mksfoex_flags = ["-d", "ATTRIBUTE2=12"]
+# Vita uses a two-part installation version: 0.1.1 is represented as 00.11.
+vita_mksfoex_flags = ["-d", "ATTRIBUTE2=12", "-s", "APP_VER=00.11", "-s", "VERSION=00.11"]
 
 # vita-elf-create resolves SceLibc heap and main-thread settings by symbol name.
 # Stripping before that conversion silently discards these process parameters.
